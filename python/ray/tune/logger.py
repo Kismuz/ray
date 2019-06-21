@@ -109,6 +109,11 @@ def to_tf_values(result, path):
                 values.append(
                     tf.Summary.Value(
                         tag="/".join(path + [attr]), simple_value=value))
+            elif isinstance(value, tf.HistogramProto):
+                # logger.warning('attr: {}, type: {}'.format(attr, type(value)))
+                values.append(
+                    tf.Summary.Value(
+                        tag="/".join(path + [attr]), histo=value))
             elif type(value) is dict:
                 values.extend(to_tf_values(value, path + [attr]))
     return values
